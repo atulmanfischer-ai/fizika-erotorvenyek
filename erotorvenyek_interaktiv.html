@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interaktív fizika-bemutató Newton törvényeiről és az erőtörvényekről.">
+<title>Az erő törvényei | Interaktív fizika</title>
+<style>
+:root{--bg:#08111f;--panel:#101e31;--panel2:#14263d;--ink:#edf5ff;--muted:#a9bdd4;--cyan:#5ee7f5;--orange:#ffb45c;--pink:#ff729d;--green:#8ee6b1;--line:#29415d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#183452 0,transparent 36%),var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.wrap{max-width:1120px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding:8px 0 18px}.brand{font-weight:800;letter-spacing:.08em;color:var(--cyan);font-size:.82rem}.progress{height:5px;background:#23364d;border-radius:9px;overflow:hidden;margin-top:14px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .35s}
+.slide{display:none;min-height:74vh;padding:clamp(24px,5vw,58px) 0 28px;animation:enter .45s ease}.slide.active{display:block}@keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.kicker{color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem}.hero h1{font-size:clamp(2.7rem,7vw,5.8rem);line-height:.98;letter-spacing:-.055em;margin:18px 0}.hero h1 em{font-style:normal;color:var(--cyan)}.lead{font-size:clamp(1.1rem,2vw,1.35rem);max-width:720px;color:var(--muted)}
+h2{font-size:clamp(2rem,4vw,3.25rem);line-height:1.1;letter-spacing:-.035em;margin:12px 0 22px}h3{margin:0 0 8px;font-size:1.15rem}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:28px 0}.card{background:linear-gradient(145deg,var(--panel),#0d1929);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 14px 35px #0002}.card p{margin:8px 0;color:var(--muted)}.tag{display:inline-block;color:var(--cyan);font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.formula{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:850;letter-spacing:-.04em;color:var(--cyan);margin:12px 0}.formula small{font-size:.42em;color:var(--muted);letter-spacing:0}.big-number{font-size:2.4rem;font-weight:850;color:var(--orange)}.law{border-left:4px solid var(--cyan);padding:4px 0 4px 18px;margin:20px 0;font-size:1.12rem}.note{background:#10283a;border:1px solid #28536a;border-radius:14px;padding:15px 18px;color:#cdeefa;margin:18px 0}.warn{border-color:#79542d;background:#302517;color:#ffe0b8}.visual{position:relative;overflow:hidden;background:linear-gradient(180deg,#10233a,#0b1728);border:1px solid var(--line);border-radius:20px;min-height:220px;padding:18px}.visual svg{width:100%;height:auto;display:block}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px}.controls label{display:flex;align-items:center;gap:10px;color:var(--muted);flex-wrap:wrap}.controls input{accent-color:var(--cyan);width:min(220px,48vw)}.value{color:var(--orange);font-weight:800;min-width:48px}.btn{border:1px solid #3b5c7c;background:#18314b;color:var(--ink);padding:10px 17px;border-radius:12px;font-weight:750;transition:.2s}.btn:hover{border-color:var(--cyan);transform:translateY(-2px)}.btn.primary{background:var(--cyan);color:#071522;border-color:var(--cyan)}.nav{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding:18px 0 28px;gap:12px}.counter{color:var(--muted);font-variant-numeric:tabular-nums}.dots{display:flex;gap:6px}.dot{width:7px;height:7px;border-radius:9px;background:#38516c}.dot.on{width:22px;background:var(--cyan)}
+.particle{animation:float 3s ease-in-out infinite alternate}@keyframes float{to{transform:translateY(-9px)}}.motion{animation:move 2.6s ease-in-out infinite alternate}@keyframes move{from{transform:translateX(0)}to{transform:translateX(125px)}}.arrow{stroke-dasharray:8 7;animation:dash 1s linear infinite}@keyframes dash{to{stroke-dashoffset:-30}}
+.quiz-option{display:block;width:100%;text-align:left;margin:10px 0;padding:14px 16px;border:1px solid var(--line);border-radius:13px;background:#102138;color:var(--ink)}.quiz-option:hover{border-color:var(--cyan)}.quiz-option.correct{border-color:var(--green);background:#123329}.quiz-option.wrong{border-color:var(--pink);background:#3a1d2b}.feedback{min-height:30px;color:var(--green);font-weight:700;margin-top:12px}
+footer{color:#7890aa;text-align:center;font-size:.82rem;padding:12px 0 30px}
+@media(max-width:700px){.wrap{padding:16px}.grid{grid-template-columns:1fr}.slide{min-height:70vh}.top{align-items:flex-start}.visual{min-height:180px}.nav .btn{padding:9px 12px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div><div class="brand">FIZIKA • INTERAKTÍV BEMUTATÓ</div><div class="progress"><span id="bar"></span></div></div><div class="counter" id="topcount">01 / 09</div></header>
+<main>
+<section class="slide active hero">
+ <div class="kicker">Mozgás • kölcsönhatás • erő</div>
+ <h1>Miért indul el,<br>áll meg vagy <em>változtat irányt</em><br>egy test?</h1>
+ <p class="lead">Az erő törvényei megmagyarázzák, hogyan változtatják meg a kölcsönhatások a testek mozgását. Ismerjük meg Newton három törvényét – hétköznapi példákkal és kipróbálható kísérletekkel!</p>
+ <div class="grid">
+  <div class="card"><span class="tag">A bemutató témája</span><h3>Newton törvényei</h3><p>Tehetetlenség, dinamika, hatás–ellenhatás, valamint néhány fontos erőtípus.</p></div>
+  <div class="card"><span class="tag">Gondolatébresztő</span><h3>Az erő nem a mozgás „üzemanyaga”</h3><p>Az eredő erő a sebesség megváltozását okozza – nem feltétlenül magát a mozgást.</p></div>
+ </div>
+ <p class="muted">Használat: lépj a nyilakkal vagy a „Tovább” gombbal. A bemutató végén rövid kvíz vár.</p>
+</section>
+<section class="slide">
+ <div class="kicker">01 • Alapfogalom</div><h2>Mi az erő?</h2>
+ <p class="lead">Az erő a testek közötti kölcsönhatás mértékét és irányát jellemző vektormennyiség. Megváltoztathatja a test mozgásállapotát, illetve alakját.</p>
+ <div class="grid">
+  <div class="card"><span class="tag">Jele</span><div class="formula">F</div><p>Az erőnek nagysága, iránya és támadáspontja van.</p></div>
+  <div class="card"><span class="tag">Mértékegysége</span><div class="formula">1 N</div><p>A newton (N). 1 N az az erő, amely 1 kg tömegű testnek 1 m/s² gyorsulást ad.</p></div>
+ </div>
+ <div class="visual"><svg viewBox="0 0 700 190" role="img" aria-label="Egy dobozra jobbra ható erő nyila"><line x1="45" y1="150" x2="655" y2="150" stroke="#526b86" stroke-width="3"/><rect x="270" y="85" width="120" height="65" rx="9" fill="#5ee7f5" opacity=".88"/><path d="M390 115 H565 M545 97 L565 115 L545 133" stroke="#ffb45c" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="475" y="82" fill="#ffb45c" font-size="21" font-weight="bold">F</text><text x="330" y="124" text-anchor="middle" fill="#08111f" font-size="18" font-weight="bold">test</text></svg></div>
+ <div class="note">Fontos: az erő vektormennyiség, ezért az iránya is számít. Több erő együttes hatását az <b>eredő erő</b> írja le.</div>
+</section>
+<section class="slide">
+ <div class="kicker">02 • Newton I. törvénye</div><h2>A tehetetlenség törvénye</h2>
+ <div class="law">Minden test megtartja nyugalmi állapotát vagy egyenes vonalú egyenletes mozgását, amíg a rá ható erők eredője nulla.</div>
+ <div class="grid">
+  <div class="card"><span class="tag">Ha az eredő erő nulla</span><h3>Nem változik a sebesség</h3><p>A test nyugalomban marad, vagy állandó sebességgel, egyenes vonalban halad tovább.</p></div>
+  <div class="card"><span class="tag">Hétköznapi példa</span><h3>Hirtelen fékező busz</h3><p>Az utas teste a korábbi mozgásállapotát „őrizné”, ezért előrebillen. A biztonsági öv segít megállítani.</p></div>
+ </div>
+ <div class="visual"><svg viewBox="0 0 700 205" role="img" aria-label="Busz és előrebillenő utas sematikus rajza"><rect x="65" y="68" width="500" height="85" rx="18" fill="#1d4662" stroke="#5ee7f5" stroke-width="3"/><rect x="95" y="83" width="105" height="40" rx="5" fill="#9ceaf0"/><rect x="215" y="83" width="105" height="40" rx="5" fill="#9ceaf0"/><rect x="335" y="83" width="105" height="40" rx="5" fill="#9ceaf0"/><circle cx="165" cy="160" r="21" fill="#a9bdd4"/><circle cx="470" cy="160" r="21" fill="#a9bdd4"/><circle cx="270" cy="43" r="13" fill="#ffb45c"/><path d="M270 57 L300 92 L285 117" stroke="#ffb45c" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M270 42 H380 M360 25 L380 42 L360 59" stroke="#ff729d" stroke-width="4" fill="none"/><text x="390" y="35" fill="#ff729d" font-size="17">előrebillenés</text><text x="65" y="190" fill="#a9bdd4" font-size="14">A busz fékez – az utas teste továbbhaladna.</text></svg></div>
+</section>
+<section class="slide">
+ <div class="kicker">03 • Newton II. törvénye</div><h2>A dinamika alaptörvénye</h2>
+ <p class="lead">A test gyorsulása egyenesen arányos a rá ható eredő erővel, és fordítottan arányos a test tömegével.</p>
+ <div class="card"><div class="formula">F<sub>eredő</sub> = m · a</div><p><b>F</b>: eredő erő (N) • <b>m</b>: tömeg (kg) • <b>a</b>: gyorsulás (m/s²)</p></div>
+ <div class="grid">
+  <div class="card"><h3>Nagyobb erő → nagyobb gyorsulás</h3><p>Azonos tömeg esetén kétszer akkora eredő erő kétszer akkora gyorsulást okoz.</p></div>
+  <div class="card"><h3>Nagyobb tömeg → kisebb gyorsulás</h3><p>Azonos erő esetén a kétszer akkora tömegű test gyorsulása feleakkora.</p></div>
+ </div>
+ <div class="note">Átrendezve: <b>a = F<sub>eredő</sub> / m</b>. A képletben mindig az összes erő vektori eredőjét kell figyelembe venni.</div>
+</section>
+<section class="slide">
+ <div class="kicker">04 • Próbáld ki!</div><h2>Mitől lesz nagyobb a gyorsulás?</h2>
+ <p class="lead">Állítsd be a test tömegét és a rá ható eredő erőt! A számítás és a mozgó ábra azonnal frissül.</p>
+ <div class="grid">
+  <div class="card">
+   <label>Erő: <span class="value" id="forceVal">10 N</span><br><input id="force" type="range" min="0" max="40" value="10" step="1"></label>
+   <label style="margin-top:18px">Tömeg: <span class="value" id="massVal">2 kg</span><br><input id="mass" type="range" min="1" max="10" value="2" step="1"></label>
+   <div class="formula" id="accel">5,0 m/s²</div><p class="muted">Gyorsulás = erő ÷ tömeg</p>
+  </div>
+  <div class="visual"><svg viewBox="0 0 500 210" role="img" aria-label="A doboz gyorsulását szemléltető animáció"><line x1="20" y1="160" x2="480" y2="160" stroke="#526b86" stroke-width="3"/><g id="movingBox" class="motion"><rect x="85" y="100" width="90" height="60" rx="9" fill="#5ee7f5"/><text x="130" y="137" text-anchor="middle" fill="#08111f" font-weight="bold">m</text></g><path d="M185 125 H330 M310 107 L330 125 L310 143" stroke="#ffb45c" stroke-width="6" fill="none" stroke-linecap="round"/><text x="250" y="93" fill="#ffb45c" font-size="18">F eredő</text><text x="25" y="190" fill="#a9bdd4" font-size="13">Sematikus ábra – a mozgás szemléltető.</text></svg></div>
+ </div>
+ <div class="note" id="experimentText">A 2 kg-os testre 10 N eredő erő hat: gyorsulása 5 m/s².</div>
+</section>
+<section class="slide">
+ <div class="kicker">05 • Newton III. törvénye</div><h2>A hatás–ellenhatás törvénye</h2>
+ <div class="law">Ha az A test erőt fejt ki a B testre, akkor a B test ugyanakkora nagyságú, ellentétes irányú erőt fejt ki az A testre.</div>
+ <div class="visual"><svg viewBox="0 0 700 220" role="img" aria-label="Két korcsolyázó ellentétes irányba lök el egymástól"><line x1="35" y1="175" x2="665" y2="175" stroke="#526b86" stroke-width="3"/><circle cx="235" cy="80" r="20" fill="#5ee7f5"/><path d="M235 102 V153 M235 117 L195 135 M235 117 L275 135" stroke="#5ee7f5" stroke-width="8" stroke-linecap="round"/><circle cx="465" cy="80" r="20" fill="#ffb45c"/><path d="M465 102 V153 M465 117 L425 135 M465 117 L505 135" stroke="#ffb45c" stroke-width="8" stroke-linecap="round"/><path d="M280 60 H390 M370 42 L390 60 L370 78" stroke="#5ee7f5" stroke-width="5" fill="none"/><path d="M420 105 H310 M330 87 L310 105 L330 123" stroke="#ffb45c" stroke-width="5" fill="none"/><text x="335" y="35" text-anchor="middle" fill="#a9bdd4" font-size="15">egymással ellentétes irányú erők</text><text x="235" y="198" text-anchor="middle" fill="#5ee7f5" font-size="15">A test</text><text x="465" y="198" text-anchor="middle" fill="#ffb45c" font-size="15">B test</text></svg></div>
+ <div class="grid">
+  <div class="card"><h3>A két erő egyszerre keletkezik</h3><p>Mindig két különböző testre hatnak, ezért nem oltják ki egymást.</p></div>
+  <div class="card"><h3>Példa: séta</h3><p>A láb hátrafelé nyomja a talajt, a talaj pedig előrefelé ható súrlódási erőt fejt ki a lábra.</p></div>
+ </div>
+ <div class="note warn">Ne keverd össze: a hatás és ellenhatás nem ugyanazon a testen hat. Az egyensúlyban lévő erők viszont ugyanarra a testre hatnak.</div>
+</section>
+<section class="slide">
+ <div class="kicker">06 • Fontos erőtípusok</div><h2>Milyen erők hatnak a testekre?</h2>
+ <div class="grid">
+  <div class="card"><span class="tag">Gravitációs erő</span><h3>F<sub>g</sub> = m · g</h3><p>A Föld a testeket a középpontja felé vonzza. A nehézségi gyorsulás közelítőleg 9,81 m/s².</p></div>
+  <div class="card"><span class="tag">Súrlódási erő</span><h3>F<sub>s</sub></h3><p>Az érintkező felületek között lép fel, és a relatív elmozdulással, illetve annak lehetőségével ellentétes irányú.</p></div>
+  <div class="card"><span class="tag">Rugóerő</span><h3>F = −D · x</h3><p>Ideális rugónál a megnyúlással arányos, az elmozdulással ellentétes irányú visszatérítő erő (Hooke-törvény).</p></div>
+  <div class="card"><span class="tag">Tartóerő</span><h3>F<sub>N</sub></h3><p>Az alátámasztás a felületre merőleges erővel tartja a testet. Vízszintes, nyugvó felületen gyakran kiegyenlíti a súlyerőt.</p></div>
+ </div>
+ <div class="note">A súlyerő és a gravitációs erő fogalma nem minden helyzetben azonos: a súlyerő a test által az alátámasztásra vagy felfüggesztésre kifejtett erő.</div>
+</section>
+<section class="slide">
+ <div class="kicker">07 • Erők összeadása</div><h2>Az eredő erő dönt!</h2>
+ <p class="lead">Ha több erő hat egy testre, vektori összegük adja az eredő erőt. Egy egyenes mentén az ellentétes irányú erőket előjelesen kell összeadni.</p>
+ <div class="card">
+  <div class="grid" style="margin:0">
+   <div><label>Jobbra ható erő: <span class="value" id="rightVal">12 N</span><br><input id="rightForce" type="range" min="0" max="30" value="12"></label></div>
+   <div><label>Balra ható erő: <span class="value" id="leftVal">5 N</span><br><input id="leftForce" type="range" min="0" max="30" value="5"></label></div>
+  </div>
+  <div class="formula" id="resultForce">7 N →</div>
+  <p id="resultExplain" class="muted">Az eredő 7 N jobbra, ezért a test jobbra gyorsul.</p>
+  <svg viewBox="0 0 600 130" role="img" aria-label="Ellentétes irányú erőnyilak"><rect x="250" y="42" width="100" height="60" rx="8" fill="#5ee7f5"/><path id="rightArrow" d="M350 72 H500 M480 54 L500 72 L480 90" stroke="#ffb45c" stroke-width="6" fill="none" stroke-linecap="round"/><path id="leftArrow" d="M250 72 H100 M120 54 L100 72 L120 90" stroke="#ff729d" stroke-width="6" fill="none" stroke-linecap="round"/><text x="425" y="35" fill="#ffb45c" font-size="15">jobbra</text><text x="120" y="35" fill="#ff729d" font-size="15">balra</text></svg>
+ </div>
+ <div class="note">Ha az eredő erő nulla, a test gyorsulása nulla – de ettől még mozoghat egyenes vonalú egyenletes mozgással.</div>
+</section>
+<section class="slide">
+ <div class="kicker">08 • Ellenőrizd a tudásod!</div><h2>Mini kvíz</h2>
+ <p class="lead">Válaszd ki a helyes választ! A végén látod az eredményedet.</p>
+ <div class="card" id="quizCard"><div class="tag" id="qNumber">1 / 4. kérdés</div><h3 id="question" style="font-size:1.35rem;margin-top:12px">Mit mond ki Newton I. törvénye?</h3><div id="options"></div><div class="feedback" id="feedback" aria-live="polite"></div><button class="btn primary" id="nextQ" style="display:none;margin-top:12px">Következő kérdés</button></div>
+</section>
+<section class="slide hero">
+ <div class="kicker">Összefoglalás</div><h1>Az erő a<br><em>változás</em> oka.</h1>
+ <div class="grid">
+  <div class="card"><span class="tag">Newton I.</span><h3>Tehetetlenség</h3><p>Eredő erő nélkül a sebesség nem változik.</p></div>
+  <div class="card"><span class="tag">Newton II.</span><h3>Dinamika</h3><p>F<sub>eredő</sub> = m · a</p></div>
+  <div class="card"><span class="tag">Newton III.</span><h3>Hatás–ellenhatás</h3><p>A kölcsönhatás erői egyenlő nagyságúak és ellentétes irányúak.</p></div>
+  <div class="card"><span class="tag">Emlékezz!</span><h3>Az erő vektormennyiség</h3><p>Az irány és a nagyság egyaránt fontos.</p></div>
+ </div>
+ <p class="lead">Köszönöm a figyelmet!</p>
+ <p class="muted" style="font-size:.9rem">Források a tananyaghoz: középiskolai fizika – Newton mozgástörvényei; SI-mértékegységrendszer (newton); Hooke-törvény. Az ábrák saját, szemléltető rajzok.</p>
+</section>
+</main>
+<nav class="nav" aria-label="Bemutató navigáció"><button class="btn" id="prev">← Vissza</button><div class="dots" id="dots"></div><span class="counter" id="count">1 / 9</span><button class="btn primary" id="next">Tovább →</button></nav>
+<footer>Interaktív fizika • Az erő törvényei • Használható számítógépen és telefonon is</footer>
+</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;
+const bar=document.getElementById('bar'),count=document.getElementById('count'),topcount=document.getElementById('topcount'),dots=document.getElementById('dots');
+slides.forEach((_,i)=>{const d=document.createElement('span');d.className='dot'+(i===0?' on':'');dots.appendChild(d)});
+function show(n){current=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('active',i===current));[...dots.children].forEach((d,i)=>d.classList.toggle('on',i===current));count.textContent=(current+1)+' / '+slides.length;topcount.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');bar.style.width=((current+1)/slides.length*100)+'%';document.getElementById('prev').disabled=current===0;document.getElementById('next').textContent=current===slides.length-1?'Újrakezdés ↻':'Tovább →';}
+document.getElementById('prev').onclick=()=>show(current-1);document.getElementById('next').onclick=()=>show(current===slides.length-1?0:current+1);document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(current+1);if(e.key==='ArrowLeft')show(current-1)});
+const force=document.getElementById('force'),mass=document.getElementById('mass');
+function updateAccel(){let f=+force.value,m=+mass.value,a=f/m;document.getElementById('forceVal').textContent=f+' N';document.getElementById('massVal').textContent=m+' kg';document.getElementById('accel').textContent=a.toLocaleString('hu-HU',{maximumFractionDigits:2})+' m/s²';document.getElementById('experimentText').textContent=`A ${m} kg-os testre ${f} N eredő erő hat: gyorsulása ${a.toLocaleString('hu-HU',{maximumFractionDigits:2})} m/s².`;document.getElementById('movingBox').style.animationDuration=(Math.max(.55,3.2-a*.09))+'s'}
+force.oninput=mass.oninput=updateAccel;updateAccel();
+const rf=document.getElementById('rightForce'),lf=document.getElementById('leftForce');
+function updateResult(){let r=+rf.value,l=+lf.value,v=r-l;document.getElementById('rightVal').textContent=r+' N';document.getElementById('leftVal').textContent=l+' N';document.getElementById('resultForce').textContent=Math.abs(v)+' N '+(v>0?'→':v<0?'←':'= 0');document.getElementById('resultExplain').textContent=v===0?'Az eredő erő nulla: a test gyorsulása nulla.':`Az eredő ${Math.abs(v)} N ${v>0?'jobbra':'balra'}, ezért a test ${v>0?'jobbra':'balra'} gyorsul.`;let scale= Math.max(0.2,Math.abs(v)/30);document.getElementById(v>=0?'rightArrow':'leftArrow').style.opacity=String(.35+.65*scale)}
+rf.oninput=lf.oninput=updateResult;updateResult();
+const questions=[
+{q:'Mit mond ki Newton I. törvénye?',o:['Az erő mindig mozgásban tartja a testet.','Nulla eredő erő esetén a sebesség nem változik.','Minden erőhöz ugyanazon a testen ellenkező erő tartozik.'],a:1,e:'Így van! Nulla eredő erő esetén a test nyugalomban marad vagy egyenes vonalú egyenletes mozgást végez.'},
+{q:'Mekkora gyorsulást kap egy 2 kg tömegű test 10 N eredő erő hatására?',o:['5 m/s²','20 m/s²','0,2 m/s²'],a:0,e:'Helyes: a = F/m = 10/2 = 5 m/s².'},
+{q:'A hatás–ellenhatás erőpár tagjai…',o:['ugyanarra a testre hatnak.','különböző testekre hatnak, és ellentétes irányúak.','mindig kiegyenlítik egymást.'],a:1,e:'Pontosan! Két különböző testre hatnak, ezért nem oltják ki egymást.'},
+{q:'Mi történik, ha egy testre ható erők eredője nulla?',o:['A test biztosan megáll.','A test gyorsulása nulla.','A testnek nincs tömege.'],a:1,e:'Helyes! A sebesség állandó maradhat; a test nem feltétlenül áll meg.'}
+];let qi=0,score=0,answered=false;
+function renderQ(){let q=questions[qi];document.getElementById('qNumber').textContent=(qi+1)+' / '+questions.length+' kérdés';document.getElementById('question').textContent=q.q;document.getElementById('feedback').textContent='';document.getElementById('nextQ').style.display='none';document.getElementById('nextQ').textContent=qi===questions.length-1?'Eredmény megtekintése':'Következő kérdés';answered=false;let box=document.getElementById('options');box.innerHTML='';q.o.forEach((o,i)=>{let b=document.createElement('button');b.className='quiz-option';b.textContent=String.fromCharCode(65+i)+') '+o;b.onclick=()=>{if(answered)return;answered=true;let good=i===q.a;if(good)score++;b.classList.add(good?'correct':'wrong');[...box.children].forEach((x,j)=>{if(j===q.a)x.classList.add('correct');x.disabled=true});document.getElementById('feedback').textContent=(good?'✓ Helyes! ':'✕ Nem egészen. ')+q.e;document.getElementById('nextQ').style.display='inline-block'};box.appendChild(b)})}
+document.getElementById('nextQ').onclick=()=>{if(qi<questions.length-1){qi++;renderQ()}else{document.getElementById('qNumber').textContent='A kvíz véget ért';document.getElementById('question').textContent=`Eredményed: ${score} / ${questions.length}`;document.getElementById('options').innerHTML='';document.getElementById('feedback').textContent=score===4?'Kiváló! Minden kérdésre helyesen válaszoltál.':score>=2?'Szép munka! Nézd át még egyszer a tévesztett részeket.':'Érdemes újra átnézni Newton három törvényét.';document.getElementById('nextQ').textContent='Kvíz újrakezdése';document.getElementById('nextQ').onclick=()=>{qi=0;score=0;renderQ()}}};renderQ();show(0);
+</script>
+</body></html>
